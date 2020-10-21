@@ -32,8 +32,7 @@ const app = new Vue({
             let maxWidth = maxColorPerRow * perColorWidth;
 
             canvas.width = this.colors.length >= maxColorPerRow ? maxWidth : this.colors.length*perColorWidth;
-            canvas.height = (Math.floor(this.colors.length*perColorWidth / maxWidth))*perColorHeight;
-            if (canvas.height == 0) canvas.height = perColorHeight;
+            canvas.height = (1+Math.floor(this.colors.length*perColorWidth / maxWidth))*perColorHeight;
 
             ctx.font = `36px 'Trebuchet MS'`;
 
