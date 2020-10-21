@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palate Maker</title>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            outline: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(19, 19, 19);
+        }
+
+        #controls {
+            background-color: rgb(70, 70, 70);
+            padding: 1rem;
+        }
+
+        .color-picker {
+            cursor: pointer;
+            margin-right: 0.2rem;
+        }
+
+        .color-picker, .color-picker::-webkit-color-swatch-wrapper {
+            background-color: 0;
+            border: 0;
+            padding: 0;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        #control-buttons {
+            margin-bottom: 1rem;
+        }
+
+        #control-buttons button {
+            display: inline-block;
+            width: 120px;
+        }
+
+        #canvas-area {
+            margin: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="vue-app">
+        <div id="controls">
+            <div id="control-buttons">
+                <button @click="colors.pop()">Remove Color</button>
+                <button @click="colors.push('#000000')">Add Color</button>
+            </div>
+            <div id="colors">
+                <input v-for="(color, index) in colors" :key="index" type="color" @change="onColorInput" :index="index" :value="color" class="color-picker">
+            </div>
+        </div>
+        <div id="canvas-area">
+            <canvas></canvas>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
