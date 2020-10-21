@@ -19,36 +19,53 @@
             padding: 1rem;
         }
 
-        .color-picker {
+        .color-input {
             cursor: pointer;
-            margin-right: 0.2rem;
         }
 
-        .color-picker, .color-picker::-webkit-color-swatch-wrapper {
+        .color-input, .color-input::-webkit-color-swatch-wrapper {
             background-color: 0;
             border: 0;
             padding: 0;
-            width: 3rem;
-            height: 3rem;
+            width: 4rem;
+            height: 2.6rem;
         }
 
         #control-buttons {
             margin-bottom: 1rem;
         }
 
-        #control-buttons button {
+        button {
             cursor: pointer;
             display: inline-block;
-            width: 120px;
             border: 1px solid #292929;
             background-color: #141414;
             color: white;
-            padding: 0.2rem 0;
             user-select: none;
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+        }
+
+        #control-buttons button {
+            width: 120px;
         }
 
         #canvas-area {
             margin: 1rem;
+        }
+
+        .color-input-wrapper {
+            display: inline-block;
+            background-color: #141414;
+            padding: 0.2rem;
+            margin-right: 0.2rem;
+        }
+
+        .color-input-wrapper .remove-button {
+            background-color: #F05959;
+            color: #141414;
         }
     </style>
 </head>
@@ -56,11 +73,15 @@
     <div id="vue-app">
         <div id="controls">
             <div id="control-buttons">
-                <button @click="colors.pop()">Remove Color</button>
                 <button onclick="app.colors.push('#'+randomHex())">Add Color</button>
             </div>
             <div id="colors">
-                <input v-for="(color, index) in colors" :key="index" type="color" @change="onColorInput" :index="index" :value="color" class="color-picker">
+                <div v-for="(color, index) in colors" :key="index"  class="color-input-wrapper">
+                    <input @change="onColorInput" type="color" class="color-input" :index="index" :value="color">
+                    <br>
+                    <button @click="onColorRemove" :index="index" class="remove-button">Remove</button>
+                </div>
+                
             </div>
         </div>
         <div id="canvas-area">

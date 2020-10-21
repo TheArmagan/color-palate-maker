@@ -33,6 +33,7 @@ const app = new Vue({
 
             canvas.width = this.colors.length >= maxColorPerRow ? maxWidth : this.colors.length*perColorWidth;
             canvas.height = (1+Math.floor(this.colors.length*perColorWidth / maxWidth))*perColorHeight;
+            
 
             ctx.font = `36px 'Trebuchet MS'`;
 
@@ -71,12 +72,16 @@ const app = new Vue({
             
 
             ctx.font = `11px 'Trebuchet MS'`;
-            ctx.fillStyle = `#${invertHex(this.colors[0], true)}80`;
+            ctx.fillStyle = `#${invertHex(this.colors[0] || "#ffffff", true)}80`;
             ctx.fillText("thearmagan.github.io", 6, 13);
         },
         onColorInput: function (e) {
             this.colors[e.target.getAttribute("index")] = e.target.value;
             this.updateCanvasColors();
+        },
+        onColorRemove: function (e) {
+            this.colors[e.target.getAttribute("index")] = "";
+            this.colors = this.colors.filter(i=>i);
         }
     },
     watch: {
