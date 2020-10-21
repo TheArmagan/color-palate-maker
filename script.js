@@ -39,6 +39,10 @@ const app = new Vue({
                 }
                 
             })
+
+            ctx.font = `11px 'Trebuchet MS'`;
+            ctx.fillStyle = "#00000080";
+            ctx.fillText("thearmagan.github.io", 6, 13);
         },
         onColorInput: function (e) {
             this.colors[e.target.getAttribute("index")] = e.target.value;
