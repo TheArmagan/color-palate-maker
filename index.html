@@ -44,6 +44,7 @@
             background-color: #141414;
             color: white;
             padding: 0.2rem 0;
+            user-select: none;
         }
 
         #canvas-area {
@@ -56,7 +57,7 @@
         <div id="controls">
             <div id="control-buttons">
                 <button @click="colors.pop()">Remove Color</button>
-                <button @click="colors.push('#000000')">Add Color</button>
+                <button onclick="app.colors.push('#'+randomHex())">Add Color</button>
             </div>
             <div id="colors">
                 <input v-for="(color, index) in colors" :key="index" type="color" @change="onColorInput" :index="index" :value="color" class="color-picker">
