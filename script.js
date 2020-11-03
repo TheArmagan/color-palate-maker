@@ -124,6 +124,7 @@ const app = new Vue({
         }
 
         this.updateCanvasColors();
+        makeSureImageBlocksDraggable();
 
         setTimeout(() => {
             requestAnimationFrame(() => {
