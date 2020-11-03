@@ -71,7 +71,7 @@ const app = new Vue({
         downloadCanvasImage: function() {
             this.updateCanvasColors();
             canvas.toBlob(function(blob) {
-                saveAs(blob, `CPM${this.colors.length}.png`);
+                saveAs(blob, `CPM${app.colors.length}.png`);
             });
         },
         exportPalateJSON: function() {
