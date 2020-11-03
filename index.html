@@ -11,7 +11,7 @@
             outline: 0;
             width: 100%;
             height: 100%;
-            background-color: rgb(19, 19, 19);
+            background-color: rgb(66, 66, 66);
         }
 
         #controls {
@@ -19,75 +19,139 @@
             padding: 1rem;
         }
 
-        .color-input {
-            cursor: pointer;
+        #color-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 128px 128px 128px 128px 128px 128px;
+            grid-template-rows: 128px;
+            align-items: center;
+            justify-content: center;
         }
 
-        .color-input, .color-input::-webkit-color-swatch-wrapper {
-            background-color: 0;
+        .color-block {
+            position: relative;
+            width: 128px;
+            height: 128px;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+            transition: box-shadow 100ms ease-in-out, border 100ms ease-in-out;
+            display: flex;
+        }
+
+        .color-block:hover {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -7px rgba(0,0,0,0.2);
+        }
+
+        .color-block > .color-picker, .color-block > .color-picker::-webkit-color-swatch-wrapper {
+            cursor: pointer;
+
             border: 0;
             padding: 0;
-            width: 4rem;
-            height: 2.6rem;
+
+            width: 100%;
+            height: 100%;
+        }
+
+        .color-block > .remove-button {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 2rem;
+
+            font-size: 1rem;
+            color: rgb(238, 238, 238);
+
+            cursor: pointer;
+
+            border: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.418);
+            background-color: rgba(255, 0, 0, 0.24);
+        }
+
+        .color-block > .remove-button:hover {
+            color: rgb(255, 255, 255);
+            background-color: rgba(255, 0, 0, 0.294);
+        }
+
+        .color-block.dragging {
+            opacity: 0.2;
         }
 
         #control-buttons {
-            margin-bottom: 1rem;
+            margin-bottom: 3rem;
         }
 
-        button {
+        #control-buttons > button {
             cursor: pointer;
-            display: inline-block;
-            border: 1px solid #292929;
-            background-color: #141414;
+            
+            margin-right: 0.6rem;
+            padding: 0.6rem;
+
+            font-size: 1rem;
+            color: rgb(255, 255, 255);
+            background-color: #2aa053;
+
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+            transition: box-shadow 100ms ease-in-out, border 100ms ease-in-out, color 100ms ease-in-out, background-color 100ms ease-in-out;
+        }
+
+        #control-buttons > button:hover {
+            background-color: #3ae374;
+            color: rgb(0, 0, 0);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -7px rgba(0,0,0,0.2);
+        }
+
+        #title {
+            margin: 0;
+            padding: 1.4rem;
+            
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: rgb(248, 248, 248);
+            background-color: rgb(80, 80, 80);
+        }
+
+        #amount {
             color: white;
-            user-select: none;
+            opacity: 0.8;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        button:hover {
-            filter: brightness(1.2);
-        }
-
-        #control-buttons button {
-            width: 120px;
-        }
-
-        #canvas-area {
-            margin: 1rem;
-        }
-
-        .color-input-wrapper {
-            display: inline-block;
-            background-color: #141414;
-            padding: 0.2rem;
-            margin-right: 0.2rem;
-        }
-
-        .color-input-wrapper .remove-button {
-            background-color: #F05959;
-            color: #141414;
+        canvas {
+            margin-top: 100vh;
         }
     </style>
 </head>
 <body>
     <div id="vue-app">
-        <div id="controls">
-            <div id="control-buttons">
-                <button onclick="app.colors.push('#'+randomHex())">Add Color</button>
-            </div>
-            <div id="colors">
-                <div v-for="(color, index) in colors" :key="index"  class="color-input-wrapper">
-                    <input @change="onColorInput" type="color" class="color-input" :index="index" :value="color">
-                    <br>
-                    <button @click="onColorRemove" :index="index" class="remove-button">Remove</button>
+        <center>
+            <h1 id="title">Color Palate Maker</h1>
+            <div id="controls">
+                <div id="control-buttons">
+                    <button onclick="app.colors.unshift('#'+randomHex())">Add Color (Before)</button>
+                    <button onclick="app.colors.push('#'+randomHex())">Add Color (After)</button>
+                    <button @click="downloadCanvasImage">Download Palate Image</button>
+                    <button @click="exportPalateJSON">Export Palate JSON</button>
+                    <button @click="importPalateJSON">Import Palate JSON</button>
+                    <p id="amount">Color Amount: {{colors.length}}</p>
+                </div>
+                <div id="color-grid">
+                    <div v-for="(color, colorIndex) in colors" class="color-block" :index="colorIndex" @contextmenu="onColorBlockContextMenu">
+                        <input class="color-picker" type="color" :value="color" :index="colorIndex" @input="onColorInput">
+                        <button class="remove-button" :index="colorIndex" @click="onColorRemove">Remove</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="canvas-area">
-            <canvas></canvas>
-        </div>
+        </center>
+        <canvas></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./FileSaver.min.js"></script>
     <script src="./script.js"></script>
 </body>
 </html>

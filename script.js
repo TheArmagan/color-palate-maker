@@ -25,17 +25,19 @@ const app = new Vue({
         updateCanvasColors: function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            let perColorWidth = 256;
-            let perColorHeight = 256;
+            let perColorWidth = 192;
+            let perColorHeight = 192;
 
             let maxColorPerRow = 6;
             let maxWidth = maxColorPerRow * perColorWidth;
 
             canvas.width = this.colors.length >= maxColorPerRow ? maxWidth : this.colors.length*perColorWidth;
-            canvas.height = (1+Math.floor(this.colors.length*perColorWidth / maxWidth))*perColorHeight;
+            canvas.height = (Math.ceil(this.colors.length*perColorWidth / maxWidth))*perColorHeight;
+            canvas.style.width = `${canvas.width}px`;
+            canvas.style.height = `${canvas.height}px`;
             
 
-            ctx.font = `36px 'Trebuchet MS'`;
+            ctx.font = `24px 'Trebuchet MS'`;
 
             this.colors.forEach((color, colorIndex) => {
 
@@ -51,22 +53,6 @@ const app = new Vue({
                 ctx.fillStyle = `#${invertHex(color.slice(1), true)}`;
 
                 ctx.fillText(color,perColorWidth+xPos-(perColorWidth/2)-(ctx.measureText(color).width/2),yPos+perColorHeight-10);
-
-                if (colorIndex != 0) {
-
-                    ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
-
-                    ctx.fillRect(xPos-2, yPos, 4, perColorHeight);
-
-                }
-
-                if (yPos != 0) {
-
-                    ctx.fillStyle = `rgba(0, 0, 0, ${0.25 / maxColorPerRow}`;
-    
-                    ctx.fillRect(0, yPos-2, canvas.width, 4);
-                    
-                }
             })
 
             
@@ -77,16 +63,47 @@ const app = new Vue({
         },
         onColorInput: function (e) {
             this.colors[e.target.getAttribute("index")] = e.target.value;
-            this.updateCanvasColors();
         },
         onColorRemove: function (e) {
             this.colors[e.target.getAttribute("index")] = "";
             this.colors = this.colors.filter(i=>i);
+        },
+        downloadCanvasImage: function() {
+            this.updateCanvasColors();
+            canvas.toBlob(function(blob) {
+                saveAs(blob, `CPM-${Date.now()}.png`);
+            });
+        },
+        exportPalateJSON: function() {
+            prompt("The JSON palate:",`${JSON.stringify(app.colors)}`);
+        },
+        importPalateJSON: function() {
+            let result = prompt("Put your own JSON color palate:",JSON.stringify(app.colors));
+            if (result) {
+                try {
+                    let newJSON = JSON.parse(result);
+                    app.colors = newJSON;
+                    app.$forceUpdate();
+                } catch {
+                    alert("Invalid JSON.");
+                }
+            }
+        },
+        onColorBlockContextMenu: function (e) {
+            let colorIndex = e.target.getAttribute("index");
+            if (e.ctrlKey) {
+                e.preventDefault();
+                let newVal = prompt("Enter new HEX color:", app.colors[colorIndex]);
+                if (isValidHex(newVal,true)) {
+                    app.colors[colorIndex] = newVal;
+                    app.$forceUpdate();
+                }
+            }
         }
     },
     watch: {
         colors: function (newVal, oldVal) {
-            this.updateCanvasColors();
+            setTimeout(()=>{makeSureImageBlocksDraggable();},10);
         }
     },
     mounted: function () {
@@ -98,6 +115,48 @@ const app = new Vue({
         this.updateCanvasColors();
     }
 })
+
+function makeSureImageBlocksDraggable() {
+    document.querySelectorAll(".color-block:not([draggable])").forEach(makeElementDraggable);
+}
+
+function makeElementDraggable(element) {
+    if (element.getAttribute("draggable") == "true") return;
+
+    element.setAttribute("draggable","true");
+
+    element.addEventListener("dragstart",(e)=>{
+        element.classList.add("dragging");
+    });
+
+    element.addEventListener("dragend",(e)=>{
+        setTimeout(()=>{element.classList.remove("dragging")},10);
+    });
+
+    element.addEventListener("dragover", (e)=>{e.preventDefault();});
+    element.addEventListener("dragenter", (e)=>{e.preventDefault();});
+    element.addEventListener("drop",(e)=>{
+
+        console.log("drop")
+
+        let draggingElement = document.querySelector(".dragging");
+        let dragIndex = parseInt(draggingElement.getAttribute("index"));
+        let targetIndex = parseInt(element.getAttribute("index"));
+        
+        let dragColor = `${app.colors[dragIndex]}`;
+        let targetColor = `${app.colors[targetIndex]}`;
+
+        app.colors[dragIndex] = targetColor;
+        app.colors[targetIndex] = dragColor;
+
+        app.$forceUpdate();
+        app.updateCanvasColors();
+    });
+}
+
+function isValidHex(hex,hashRequired){
+    return RegExp(`^#${hashRequired ? "" : "?"}[0-9abcdef]{6}$`,"i").test(hex)
+}
 
 // https://stackoverflow.com/a/5092846/11949394
 function randomHex() {
