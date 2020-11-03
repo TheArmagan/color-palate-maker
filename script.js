@@ -124,11 +124,13 @@ const app = new Vue({
         }
 
         this.updateCanvasColors();
-        makeSureImageBlocksDraggable();
 
         setTimeout(() => {
             requestAnimationFrame(() => {
                 document.body.classList.remove("hidden");
+                setTimeout(()=>{
+                    makeSureImageBlocksDraggable();
+                },10);
             });
         }, 10);
     }
