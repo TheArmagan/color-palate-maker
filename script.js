@@ -83,6 +83,7 @@ const app = new Vue({
                 try {
                     let newJSON = JSON.parse(result);
                     app.colors = newJSON;
+                    updateColorHash();
                     app.$forceUpdate();
                 } catch {
                     alert("Invalid JSON.");
