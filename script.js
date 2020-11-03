@@ -118,10 +118,10 @@ const app = new Vue({
 
         let hashParams = parseSearchParams(location.hash);
 
-        if (hashParams.hasOwnProperty("colors")) {
+        if (hashParams.colors) {
             this.colors = hashParams.colors.split(",").map(i=>`#${i}`);
         } else {
-            updateColorHash();
+            window.location.hash = `colors=${this.colors.map(i=>i.slice(1)).join(",")}`
         }
 
         this.updateCanvasColors();
@@ -129,7 +129,7 @@ const app = new Vue({
 })
 
 function updateColorHash() {
-    window.location.hash = `colors=${app.colors.map(i=>i.slice(1)).join(",")}`;
+    window.location.hash = app.colors.length == 0 ? "" : `colors=${app.colors.map(i=>i.slice(1)).join(",")}`;
 }
 
 function parseSearchParams(params="") {
