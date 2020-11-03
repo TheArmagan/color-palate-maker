@@ -61,12 +61,14 @@ const app = new Vue({
             ctx.fillStyle = `#${invertHex(this.colors[0] || "#ffffff", true)}80`;
             ctx.fillText("thearmagan.github.io", 6, 13);
         },
-        onColorInput: function (e) {
+        onColorInput: _.debounce(function(e){
             this.colors[e.target.getAttribute("index")] = e.target.value;
-        },
+            window.location.hash = `colors=${this.colors.map(i=>i.slice(1)).join(",")}`;
+        },250),
         onColorRemove: function (e) {
             this.colors[e.target.getAttribute("index")] = "";
             this.colors = this.colors.filter(i=>i);
+            window.location.hash = `colors=${this.colors.map(i=>i.slice(1)).join(",")}`;
         },
         downloadCanvasImage: function() {
             this.updateCanvasColors();
@@ -103,7 +105,9 @@ const app = new Vue({
     },
     watch: {
         colors: function (newVal, oldVal) {
-            setTimeout(()=>{makeSureImageBlocksDraggable();},10);
+            setTimeout(()=>{
+                makeSureImageBlocksDraggable();
+            },10);
         }
     },
     mounted: function () {
@@ -112,9 +116,20 @@ const app = new Vue({
         canvas.height = 96;
         ctx = canvas.getContext("2d");
 
+        let hashParams = parseSearchParams(location.hash);
+
+        if (hashParams.hasOwnProperty("colors")) {
+            this.colors = hashParams.colors.split(",").map(i=>`#${i}`);
+        }
+
         this.updateCanvasColors();
     }
 })
+
+function parseSearchParams(params="") {
+    if (params.startsWith("#") || params.startsWith("?")) params = params.slice(1);
+    return Object.fromEntries(params.split("&").map(i=>i.split("=",2)))
+}
 
 function makeSureImageBlocksDraggable() {
     document.querySelectorAll(".color-block:not([draggable])").forEach(makeElementDraggable);
@@ -136,9 +151,6 @@ function makeElementDraggable(element) {
     element.addEventListener("dragover", (e)=>{e.preventDefault();});
     element.addEventListener("dragenter", (e)=>{e.preventDefault();});
     element.addEventListener("drop",(e)=>{
-
-        console.log("drop")
-
         let draggingElement = document.querySelector(".dragging");
         let dragIndex = parseInt(draggingElement.getAttribute("index"));
         let targetIndex = parseInt(element.getAttribute("index"));
