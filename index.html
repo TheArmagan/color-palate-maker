@@ -141,7 +141,7 @@
                     <p id="amount">Color Amount: {{colors.length}}</p>
                 </div>
                 <div id="color-grid">
-                    <div v-for="(color, colorIndex) in colors" class="color-block" :index="colorIndex" @contextmenu="onColorBlockContextMenu">
+                    <div v-for="(color, colorIndex) in colors" class="color-block" :index="colorIndex" @contextmenu="onColorBlockContextMenu" :title="`${color.toUpperCase()} | Click to change color from menu. | CTRL + RightClick to change color manually.`">
                         <input class="color-picker" type="color" :value="color" :index="colorIndex" @input="onColorInput">
                         <button class="remove-button" :index="colorIndex" @click="onColorRemove">Remove</button>
                     </div>
