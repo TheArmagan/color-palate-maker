@@ -63,12 +63,12 @@ const app = new Vue({
         },
         onColorInput: _.debounce(function(e){
             this.colors[e.target.getAttribute("index")] = e.target.value;
-            window.location.hash = `colors=${this.colors.map(i=>i.slice(1)).join(",")}`;
+            updateColorHash();
         },250),
         onColorRemove: function (e) {
             this.colors[e.target.getAttribute("index")] = "";
             this.colors = this.colors.filter(i=>i);
-            window.location.hash = `colors=${this.colors.map(i=>i.slice(1)).join(",")}`;
+            updateColorHash();
         },
         downloadCanvasImage: function() {
             this.updateCanvasColors();
@@ -121,12 +121,16 @@ const app = new Vue({
         if (hashParams.hasOwnProperty("colors")) {
             this.colors = hashParams.colors.split(",").map(i=>`#${i}`);
         } else {
-            window.location.hash = `colors=${this.colors.map(i=>i.slice(1)).join(",")}`;
+            updateColorHash();
         }
 
         this.updateCanvasColors();
     }
 })
+
+function updateColorHash() {
+    window.location.hash = `colors=${app.colors.map(i=>i.slice(1)).join(",")}`;
+}
 
 function parseSearchParams(params="") {
     if (params.startsWith("#") || params.startsWith("?")) params = params.slice(1);
@@ -164,7 +168,7 @@ function makeElementDraggable(element) {
         app.colors[targetIndex] = dragColor;
 
         app.$forceUpdate();
-        app.updateCanvasColors();
+        updateColorHash();
     });
 }
 
