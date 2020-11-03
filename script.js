@@ -55,8 +55,6 @@ const app = new Vue({
                 ctx.fillText(color,perColorWidth+xPos-(perColorWidth/2)-(ctx.measureText(color).width/2),yPos+perColorHeight-10);
             })
 
-            
-
             ctx.font = `11px 'Trebuchet MS'`;
             ctx.fillStyle = `#${invertHex(this.colors[0] || "#ffffff", true)}80`;
             ctx.fillText("thearmagan.github.io", 6, 13);
@@ -73,7 +71,7 @@ const app = new Vue({
         downloadCanvasImage: function() {
             this.updateCanvasColors();
             canvas.toBlob(function(blob) {
-                saveAs(blob, `CPM-${Date.now()}.png`);
+                saveAs(blob, `CPM${this.colors.length}.png`);
             });
         },
         exportPalateJSON: function() {
