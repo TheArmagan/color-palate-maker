@@ -64,7 +64,7 @@ const app = new Vue({
         onColorInput: _.debounce(function(e){
             this.colors[e.target.getAttribute("index")] = e.target.value;
             updateColorHash();
-        },250),
+        },100),
         onColorRemove: function (e) {
             this.colors[e.target.getAttribute("index")] = "";
             this.colors = this.colors.filter(i=>i);
@@ -125,6 +125,12 @@ const app = new Vue({
         }
 
         this.updateCanvasColors();
+
+        setTimeout(() => {
+            requestAnimationFrame(() => {
+                document.body.classList.remove("hidden");
+            });
+        }, 10);
     }
 })
 

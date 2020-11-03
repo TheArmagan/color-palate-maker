@@ -14,6 +14,17 @@
             background-color: rgb(66, 66, 66);
         }
 
+        body {
+            pointer-events: all;
+            opacity: 1;
+            transition: opacity 300ms ease-in-out;
+        }
+
+        body.hidden {
+            pointer-events: none;
+            opacity: 0;
+        }
+
         #controls {
             background-color: rgb(70, 70, 70);
             padding: 1rem;
@@ -127,7 +138,7 @@
         }
     </style>
 </head>
-<body>
+<body class="hidden">
     <div id="vue-app">
         <center>
             <h1 id="title">Color Palate Maker</h1>
