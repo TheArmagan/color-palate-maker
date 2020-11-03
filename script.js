@@ -120,6 +120,8 @@ const app = new Vue({
 
         if (hashParams.hasOwnProperty("colors")) {
             this.colors = hashParams.colors.split(",").map(i=>`#${i}`);
+        } else {
+            window.location.hash = `colors=${this.colors.map(i=>i.slice(1)).join(",")}`;
         }
 
         this.updateCanvasColors();
