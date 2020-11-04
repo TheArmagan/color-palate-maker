@@ -19,9 +19,9 @@
                 <div id="control-buttons">
                     <button onclick="app.colors.unshift('#'+randomHex())">Add Color (Before)</button>
                     <button onclick="app.colors.push('#'+randomHex())">Add Color (After)</button>
-                    <button @click="downloadCanvasImage">Download Palate Image</button>
-                    <button @click="exportPalateJSON">Export Palate JSON</button>
-                    <button @click="importPalateJSON">Import Palate JSON</button>
+                    <button @click="downloadCanvasImage" :disabled="colors.length == 0">Download Palate Image</button>
+                    <button @click="exportPalateJSON" :disabled="colors.length == 0">Export Palate JSON</button>
+                    <button @click="importPalateJSON" :disabled="colors.length == 0">Import Palate JSON</button>
                     <p id="amount">Color Amount: {{colors.length}}</p>
                 </div>
                 <div id="color-grid">

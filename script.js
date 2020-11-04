@@ -1,7 +1,13 @@
+const _url = new URL(window.location.href);
+
 /** @type {HTMLCanvasElement} */
 let canvas;
 /** @type {CanvasRenderingContext2D} */
 let ctx;
+
+const updateCPMUrlHash = _.debounce(function(colors){
+    window.location.hash = "CPM"+JSON.stringify(colors);
+},500);
 
 const app = new Vue({
     el: "#vue-app",
@@ -59,14 +65,14 @@ const app = new Vue({
             ctx.fillStyle = `#${invertHex(this.colors[0] || "#ffffff", true)}80`;
             ctx.fillText("thearmagan.github.io", 6, 13);
         },
-        onColorInput: _.debounce(function(e){
+        onColorInput: function(e) {
             this.colors[e.target.getAttribute("index")] = e.target.value;
-            updateColorHash();
-        },100),
+            app.$forceUpdate();
+        },
         onColorRemove: function (e) {
             this.colors[e.target.getAttribute("index")] = "";
             this.colors = this.colors.filter(i=>i);
-            updateColorHash();
+            app.$forceUpdate();
         },
         downloadCanvasImage: function() {
             this.updateCanvasColors();
@@ -83,7 +89,7 @@ const app = new Vue({
                 try {
                     let newJSON = JSON.parse(result);
                     app.colors = newJSON;
-                    updateColorHash();
+                    
                     app.$forceUpdate();
                 } catch {
                     alert("Invalid JSON.");
@@ -109,21 +115,20 @@ const app = new Vue({
             },10);
         }
     },
+    updated: function () {
+        updateCPMUrlHash(this.colors);
+    },
     mounted: function () {
         canvas = document.querySelector("canvas");
         canvas.width = window.innerWidth;
         canvas.height = 96;
         ctx = canvas.getContext("2d");
 
-        let hashParams = parseSearchParams(location.hash);
-
-        if (hashParams.colors) {
-            this.colors = hashParams.colors.split(",").map(i=>`#${i}`);
+        if (decodeURIComponent(location.hash).startsWith(`#CPM["`)) {
+            this.colors = JSON.parse(decodeURIComponent(location.hash).slice(4));
         } else {
-            window.location.hash = `colors=${this.colors.map(i=>i.slice(1)).join(",")}`
+            updateCPMUrlHash(this.colors);
         }
-
-        this.updateCanvasColors();
 
         setTimeout(() => {
             requestAnimationFrame(() => {
@@ -135,10 +140,6 @@ const app = new Vue({
         }, 10);
     }
 })
-
-function updateColorHash() {
-    window.location.hash = app.colors.length == 0 ? "" : `colors=${app.colors.map(i=>i.slice(1)).join(",")}`;
-}
 
 function parseSearchParams(params="") {
     if (params.startsWith("#") || params.startsWith("?")) params = params.slice(1);
@@ -176,7 +177,7 @@ function makeElementDraggable(element) {
         app.colors[targetIndex] = dragColor;
 
         app.$forceUpdate();
-        updateColorHash();
+        
     });
 }
 
