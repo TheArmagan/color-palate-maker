@@ -6,7 +6,7 @@ let canvas;
 let ctx;
 
 const updateCPMUrlHash = _.debounce(function(colors){
-    window.location.hash = "CPM"+JSON.stringify(colors);
+    window.location.hash = encodeURIComponent("CPM"+JSON.stringify(colors));
 },500);
 
 const app = new Vue({
