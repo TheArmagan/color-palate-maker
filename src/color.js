@@ -8,7 +8,8 @@ class Color {
 
   setHex(hex = "#000000") {
     hex = hex.replace(/#/g, '');
-    if (hex.length === 3) hex = hex.repeat(2);
+    if (!(hex.length == 3 || hex.length == 6)) throw "Invalid hex probably!";
+    if (hex.length == 3) hex = hex.repeat(2);
     this.#hex = "#" + hex;
     this.#rgb = HEXtoRGB(hex);
     this.#hsl = HEXtoHSL(hex);
@@ -44,6 +45,7 @@ class Color {
   }
 }
 
+// https://www.html-code-generator.com/javascript/color-converter-script
 function HEXtoRGB(hex) {
   hex = hex.replace(/#/g, '');
   if (hex.length === 3) {
@@ -63,6 +65,7 @@ function HEXtoRGB(hex) {
   }
 }
 
+// https://www.html-code-generator.com/javascript/color-converter-script
 function HEXtoHSL(hex) {
   hex = hex.replace(/#/g, '');
   if (hex.length === 3) {

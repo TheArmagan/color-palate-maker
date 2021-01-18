@@ -1,8 +1,9 @@
-Vue.use(Buefy);
+Vue.use(Vuesax);
 
 const app = new Vue({
   el: "#app",
   data: {
-    colors: []
+    colors: new Set(),
+    pr: new PalateRenderer()
   }
 });
