@@ -4,19 +4,89 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Color Palate Maker</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/verte@0.0.12/dist/verte.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="app">
       <div class="container">
-        <nav></nav>
-        <main></main>
+        <div class="main-controls">
+          <div class="color-picker">
+            <verte
+              v-model="currentColor"
+              picker="square"
+              model="hex"
+              ref="colorPicker"
+              :draggable="false"
+            ></verte>
+          </div>
+          <div class="suggested-colors">
+            <div
+              class="suggested-color"
+              v-for="(suggestedColor, suggestedColorIndex) in suggestedColors"
+              :key="`${suggestedColorIndex}-${suggestedColorIndex}`"
+              :style="`background-color: ${suggestedColor};`"
+              @click="currentColor = suggestedColor"
+            ></div>
+          </div>
+          <button class="add-button" @click="addColor()">
+            <svg viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="colors">
+          <div class="colors-wrapper">
+            <div class="colors-grid">
+              <div
+                v-for="(color, index) in currentColors"
+                class="color"
+                :key="index"
+                :style="`background-color: ${color[1].getHex(true)}`"
+              >
+                <button class="btn remove" @click="removeColor(color[0])">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      fill="currentColor"
+                      d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  class="btn pick-color"
+                  @click="currentColor = color[1].getHex(true)"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      fill="currentColor"
+                      d="M6.92,19L5,17.08L13.06,9L15,10.94M20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L13.84,6.41L11.91,4.5L10.5,5.91L11.92,7.33L3,16.25V21H7.75L16.67,12.08L18.09,13.5L19.5,12.09L17.58,10.17L20.7,7.05C21.1,6.65 21.1,6 20.71,5.63Z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="color-hex"
+                  :style="`color: ${color[1].getInverted(true).getHex(true)};`"
+                >
+                  {{color[1].getHex(true)}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="https://unpkg.com/vuesax@4.0.1-alpha.16/dist/vuesax.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chillout@5.0.0/dist/chillout.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://unpkg.com/verte@0.0.12/dist/verte.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tinycolor2@1.4.2/dist/tinycolor-min.js"></script>
+    <script src="progress-bar.js"></script>
     <script src="Color.js"></script>
     <script src="PalateRenderer.js"></script>
     <script src="script.js"></script>

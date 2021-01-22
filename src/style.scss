@@ -1,0 +1,210 @@
+* {
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100vw;
+  height: 100vh;
+}
+
+#app {
+  background-attachment: fixed;
+  background-image: linear-gradient(
+    109.6deg,
+    rgba(223, 234, 247, 1) 11.2%,
+    rgba(244, 248, 252, 1) 91.1%
+  );
+  contain: content;
+  overflow: auto;
+}
+
+.container {
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.main-controls {
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 8px;
+  background-color: rgb(250, 250, 250);
+
+  box-shadow: 0 0.9px 2.2px rgba(0, 0, 0, 0.02),
+    0 2.2px 5.3px rgba(0, 0, 0, 0.028), 0 4.1px 10px rgba(0, 0, 0, 0.035),
+    0 7.4px 17.9px rgba(0, 0, 0, 0.042), 0 13.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 33px 80px rgba(0, 0, 0, 0.07);
+
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+
+  .color-picker {
+    display: inline-block;
+    position: relative;
+
+    .verte {
+      width: 128px;
+      height: 128px;
+
+      .verte__guide {
+        width: 100%;
+        height: 100%;
+        border: 3px solid #dcdcdc;
+        transition: border 100ms ease-in-out;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+          border: 3px solid #b4b4b4;
+        }
+      }
+    }
+  }
+
+  .suggested-colors {
+    display: grid;
+    grid-template-columns: repeat(4, 64px);
+    grid-template-rows: repeat(4, 32px);
+    gap: 0px;
+    float: right;
+    width: 256px;
+    height: 128px;
+    background-color: #000000;
+    border-radius: 6px;
+    contain: content;
+    cursor: not-allowed;
+
+    .suggested-color {
+      display: inline-block;
+      cursor: pointer;
+      width: 64px;
+      height: 32px;
+      transition: transform 80ms ease-in-out;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  .add-button {
+    display: inline;
+    float: right;
+
+    width: 128px;
+    height: 128px;
+
+    border: none;
+    background-color: #0dfa9f;
+    color: rgb(26, 26, 26);
+
+    cursor: pointer;
+
+    margin-right: 8px;
+    border-radius: 6px;
+
+    transition: transform 80ms ease-in-out;
+
+    &:hover {
+      transform: scale(1.025);
+    }
+
+    &:active {
+      transform: scale(0.975);
+    }
+  }
+}
+
+.colors {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  background-color: rgb(250, 250, 250);
+
+  box-shadow: 0 0.9px 2.2px rgba(0, 0, 0, 0.02),
+    0 2.2px 5.3px rgba(0, 0, 0, 0.028), 0 4.1px 10px rgba(0, 0, 0, 0.035),
+    0 7.4px 17.9px rgba(0, 0, 0, 0.042), 0 13.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 33px 80px rgba(0, 0, 0, 0.07);
+
+  border-radius: 6px;
+
+  .colors-wrapper {
+    margin: 0 auto;
+    width: min-content;
+
+    .colors-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 128px);
+      grid-template-rows: repeat(6, 128px);
+      gap: 8px;
+      margin: 0 auto;
+
+      .color {
+        display: inline;
+        width: 128px;
+        height: 128px;
+        background-color: #0dfa9f;
+        border-radius: 8px;
+        position: relative;
+
+        box-shadow: 0 0.9px 2.2px rgba(0, 0, 0, 0.02),
+          0 2.2px 5.3px rgba(0, 0, 0, 0.028), 0 4.1px 10px rgba(0, 0, 0, 0.035),
+          0 7.4px 17.9px rgba(0, 0, 0, 0.042),
+          0 13.8px 33.4px rgba(0, 0, 0, 0.05), 0 33px 80px rgba(0, 0, 0, 0.07);
+
+        .color-hex {
+          position: absolute;
+          bottom: 4px;
+          left: 4px;
+
+          font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+            "Lucida Sans", Arial, sans-serif;
+        }
+
+        .btn {
+          display: inline;
+          color: #fafafa;
+          background-color: #0e0e0e;
+          border: 0;
+
+          padding: 4px;
+          border-radius: 50%;
+          width: 28px;
+          height: 28px;
+
+          position: absolute;
+          right: 4px;
+
+          cursor: pointer;
+
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+
+        .remove {
+          top: 4px;
+
+          &:hover {
+            background-color: #be0000;
+          }
+        }
+
+        .pick-color {
+          top: 36px;
+
+          &:hover {
+            background-color: #1cbe00;
+          }
+        }
+      }
+    }
+  }
+}
