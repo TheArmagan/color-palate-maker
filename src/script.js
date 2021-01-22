@@ -1,5 +1,5 @@
 Vue.use(Verte, {
-  recentColors: JSON.parse(localStorage.getItem('colors')) || ["#000000"],
+  recentColors: JSON.parse(localStorage.getItem('colors') || "{}") || ["#000000"],
   onRecentColorsChange(colors) {
     localStorage.setItem('colors', JSON.stringify(colors));
   }
@@ -10,6 +10,7 @@ const app = new Vue({
   data: {
     currentColor: null,
     currentColors: null,
+    selectedColor: null,
     pr: new PalateRenderer(),
     suggestedColors: []
   },
@@ -20,7 +21,7 @@ const app = new Vue({
       this.currentColor = value;
     });
 
-    this.currentColor = (JSON.parse(localStorage.getItem('colors'))[0] || "#000000");
+    this.currentColor = (JSON.parse(localStorage.getItem('colors') || "{}")[0] || "#000000");
     this.currentColors = new Map([["0", new Color(this.currentColor)]])
   },
   computed: {
