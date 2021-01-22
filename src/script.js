@@ -27,7 +27,7 @@ const app = new Vue({
     });
 
     this.currentColor = (JSON.parse(localStorage.getItem('colors') || "{}")[0] || "#000000");
-    this.currentColors = new Map([["0", new Color(this.currentColor)]])
+    this.currentColors = new Map([["0", new Color(this.currentColor)]]);
   },
   computed: {
     currentColorsArray: () => {
