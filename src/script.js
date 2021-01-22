@@ -19,6 +19,11 @@ const app = new Vue({
       return this.$refs.colorPicker.value
     }, function (value) {
       this.currentColor = value;
+
+      if (this.selectedColor != null) {
+        this.currentColors.set(this.selectedColor, new Color(this.currentColor));
+        this.$forceUpdate();
+      }
     });
 
     this.currentColor = (JSON.parse(localStorage.getItem('colors') || "{}")[0] || "#000000");

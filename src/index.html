@@ -74,6 +74,7 @@
                   class="btn select"
                   @click="selectedColor != color[0] ? selectedColor = color[0] : selectedColor = null"
                   :class="{'active': selectedColor == color[0]}"
+                  :title="selectedColor != color[0] ? 'Focus' : 'Un Focus'"
                 >
                   <svg viewBox="0 0 24 24" v-if="selectedColor != color[0]">
                     <path
