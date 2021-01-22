@@ -46,13 +46,17 @@ const app = new Vue({
   },
   watch: {
     "currentColor"(value) {
-      this.suggestedColors = [
-        ...tinycolor(value).monochromatic(results = 4),
-        ...tinycolor(value).analogous(results = 4),
+      this.suggestedColors = [...new Set([
+        ...tinycolor(value).analogous(results = 25, slices = 30),
+        ...tinycolor(value).monochromatic(results = 12),
         ...tinycolor(value).triad(),
         ...tinycolor(value).tetrad(),
-        tinycolor(invertHex(value))
-      ].map(i => i.toHexString());
+        tinycolor(invertHex(value)),
+        tinycolor(value).greyscale(),
+        ...Array(20).fill().map((c, i) => tinycolor(value).lighten(i * 5)),
+        ...Array(20).fill().map((c, i) => tinycolor(value).darken(i * 5)),
+        ...Array(20).fill().map((c, i) => tinycolor(value).spin(i * 5))
+      ].map(i => i.toHexString()))];
       this.$forceUpdate();
     }
   }

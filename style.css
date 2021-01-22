@@ -77,6 +77,8 @@ body,
   border-radius: 6px;
   contain: content;
   cursor: not-allowed;
+  overflow-x: hidden;
+  overflow-y: overlay;
 }
 
 .main-controls .suggested-colors .suggested-color {
