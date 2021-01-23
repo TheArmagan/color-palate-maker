@@ -51,7 +51,7 @@ body,
     .verte {
       width: 128px;
       height: 128px;
-      z-index: 999;
+      z-index: 99999999;
 
       .verte__guide {
         width: 100%;
@@ -246,6 +246,60 @@ body,
   }
 }
 
+.import-and-export {
+  display: inline;
+  float: right;
+  width: 128px;
+  height: 128px;
+  margin-right: 8px;
+
+  .btn {
+    display: flex;
+    width: 128px;
+    height: 62px;
+
+    border: 0;
+    border-radius: 8px;
+
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+
+    transition: transform 80ms ease-in-out;
+
+    &:hover {
+      transform: scale(1.025);
+    }
+
+    &:active {
+      transform: scale(0.975);
+    }
+
+    .button-container {
+      width: 128px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      z-index: 999;
+    }
+
+    svg {
+      width: 128px;
+      height: 30px;
+    }
+  }
+
+  .export-button {
+    margin-bottom: 4px;
+    background-color: #6fc2a6;
+  }
+
+  .import-button {
+    background-color: #00beb4;
+  }
+}
+
 [tooltip] {
   position: relative;
   &:after {
@@ -263,7 +317,7 @@ body,
     border-radius: 8px;
     pointer-events: none;
     max-height: 16px;
-    z-index: 99;
+    z-index: 9999999 !important;
     font-size: 12px;
     font-family: Arial, Helvetica, sans-serif;
   }

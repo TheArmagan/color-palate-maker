@@ -46,7 +46,7 @@ body,
 .main-controls .color-picker .verte {
   width: 128px;
   height: 128px;
-  z-index: 999;
+  z-index: 99999999;
 }
 
 .main-controls .color-picker .verte .verte__guide {
@@ -237,6 +237,69 @@ body,
   background-color: #00beb4;
 }
 
+.import-and-export {
+  display: inline;
+  float: right;
+  width: 128px;
+  height: 128px;
+  margin-right: 8px;
+}
+
+.import-and-export .btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 128px;
+  height: 62px;
+  border: 0;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: -webkit-transform 80ms ease-in-out;
+  transition: -webkit-transform 80ms ease-in-out;
+  transition: transform 80ms ease-in-out;
+  transition: transform 80ms ease-in-out, -webkit-transform 80ms ease-in-out;
+}
+
+.import-and-export .btn:hover {
+  -webkit-transform: scale(1.025);
+          transform: scale(1.025);
+}
+
+.import-and-export .btn:active {
+  -webkit-transform: scale(0.975);
+          transform: scale(0.975);
+}
+
+.import-and-export .btn .button-container {
+  width: 128px;
+  height: 62px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  z-index: 999;
+}
+
+.import-and-export .btn svg {
+  width: 128px;
+  height: 30px;
+}
+
+.import-and-export .export-button {
+  margin-bottom: 4px;
+  background-color: #6fc2a6;
+}
+
+.import-and-export .import-button {
+  background-color: #00beb4;
+}
+
 [tooltip] {
   position: relative;
 }
@@ -260,7 +323,7 @@ body,
   border-radius: 8px;
   pointer-events: none;
   max-height: 16px;
-  z-index: 99;
+  z-index: 9999999 !important;
   font-size: 12px;
   font-family: Arial, Helvetica, sans-serif;
 }
