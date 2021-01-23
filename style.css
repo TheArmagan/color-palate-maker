@@ -287,8 +287,13 @@ body,
 }
 
 .import-and-export .btn svg {
-  width: 128px;
+  width: 30px;
   height: 30px;
+}
+
+.import-and-export .btn p {
+  margin-left: 4px;
+  font-size: 14px;
 }
 
 .import-and-export .export-button {
