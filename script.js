@@ -1,9 +1,4 @@
-Vue.use(Verte, {
-  recentColors: JSON.parse(localStorage.getItem('colors') || "{}") || ["#000000"],
-  onRecentColorsChange(colors) {
-    localStorage.setItem('colors', JSON.stringify(colors));
-  }
-});
+Vue.use(Verte);
 
 const app = new Vue({
   el: "#app",

@@ -51,6 +51,7 @@ body,
     .verte {
       width: 128px;
       height: 128px;
+      z-index: 999;
 
       .verte__guide {
         width: 100%;
@@ -63,6 +64,31 @@ body,
         &:hover {
           border: 3px solid #b4b4b4;
         }
+      }
+
+      .verte__submit {
+        display: none;
+      }
+
+      .verte__model {
+        width: 18px !important;
+        margin-right: 8px;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .verte__controller {
+        .slider {
+          display: none;
+        }
+      }
+
+      .verte__input {
+        text-transform: uppercase;
+      }
+
+      .verte__close {
+        display: none;
       }
     }
   }
@@ -216,6 +242,44 @@ body,
           }
         }
       }
+    }
+  }
+}
+
+[tooltip] {
+  position: relative;
+  &:after {
+    content: attr(tooltip);
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+    transition: all 100ms ease-in-out;
+    color: rgb(250, 250, 250);
+    background-color: #00000093;
+    width: max-content;
+    padding: 4px;
+    border-radius: 8px;
+    pointer-events: none;
+    max-height: 16px;
+    z-index: 99;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  &:hover {
+    &:after {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0px);
+      color: rgb(250, 250, 250);
+      background-color: #00000093;
+      width: max-content;
+      max-height: 16px;
+      padding: 4px;
+      border-radius: 8px;
     }
   }
 }

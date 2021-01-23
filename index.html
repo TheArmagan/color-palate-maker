@@ -14,13 +14,14 @@
     <div id="app">
       <div class="container">
         <div class="main-controls">
-          <div class="color-picker">
+          <div class="color-picker" tooltip="Change color">
             <verte
               v-model="currentColor"
               picker="square"
               model="hex"
               ref="colorPicker"
               :draggable="false"
+              :show-history="null"
             ></verte>
           </div>
           <div class="suggested-colors">
@@ -32,7 +33,11 @@
               @click="currentColor = suggestedColor"
             ></div>
           </div>
-          <button class="add-button" @click="addColor()">
+          <button
+            class="add-button"
+            @click="addColor()"
+            tooltip="Add current color to list"
+          >
             <svg viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -51,7 +56,11 @@
                 :style="`background-color: ${color[1].getHex(true)}`"
                 :class="{'selected': selectedColor == color[0]}"
               >
-                <button class="btn remove" @click="removeColor(color[0])">
+                <button
+                  class="btn remove"
+                  @click="removeColor(color[0])"
+                  tooltip="Remove color"
+                >
                   <svg viewBox="0 0 24 24">
                     <path
                       fill="currentColor"
@@ -62,6 +71,7 @@
                 <button
                   class="btn pick-color"
                   @click="currentColor = color[1].getHex(true)"
+                  tooltip="Set color"
                 >
                   <svg viewBox="0 0 24 24">
                     <path
@@ -74,7 +84,7 @@
                   class="btn select"
                   @click="selectedColor != color[0] ? selectedColor = color[0] : selectedColor = null"
                   :class="{'active': selectedColor == color[0]}"
-                  :title="selectedColor != color[0] ? 'Focus' : 'Un Focus'"
+                  :tooltip="selectedColor != color[0] ? 'Focus' : 'Un-focus'"
                 >
                   <svg viewBox="0 0 24 24" v-if="selectedColor != color[0]">
                     <path

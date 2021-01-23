@@ -46,6 +46,7 @@ body,
 .main-controls .color-picker .verte {
   width: 128px;
   height: 128px;
+  z-index: 999;
 }
 
 .main-controls .color-picker .verte .verte__guide {
@@ -60,6 +61,29 @@ body,
 
 .main-controls .color-picker .verte .verte__guide:hover {
   border: 3px solid #b4b4b4;
+}
+
+.main-controls .color-picker .verte .verte__submit {
+  display: none;
+}
+
+.main-controls .color-picker .verte .verte__model {
+  width: 18px !important;
+  margin-right: 8px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.main-controls .color-picker .verte .verte__controller .slider {
+  display: none;
+}
+
+.main-controls .color-picker .verte .verte__input {
+  text-transform: uppercase;
+}
+
+.main-controls .color-picker .verte .verte__close {
+  display: none;
 }
 
 .main-controls .suggested-colors {
@@ -211,5 +235,50 @@ body,
 
 .colors .colors-wrapper .colors-grid .color .select:hover, .colors .colors-wrapper .colors-grid .color .select.active {
   background-color: #00beb4;
+}
+
+[tooltip] {
+  position: relative;
+}
+
+[tooltip]:after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  opacity: 0;
+  -webkit-transform: translateX(-50%) translateY(-10px);
+          transform: translateX(-50%) translateY(-10px);
+  -webkit-transition: all 100ms ease-in-out;
+  transition: all 100ms ease-in-out;
+  color: #fafafa;
+  background-color: #00000093;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 4px;
+  border-radius: 8px;
+  pointer-events: none;
+  max-height: 16px;
+  z-index: 99;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+[tooltip]:hover:after {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  opacity: 1;
+  -webkit-transform: translateX(-50%) translateY(0px);
+          transform: translateX(-50%) translateY(0px);
+  color: #fafafa;
+  background-color: #00000093;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  max-height: 16px;
+  padding: 4px;
+  border-radius: 8px;
 }
 /*# sourceMappingURL=style.css.map */
