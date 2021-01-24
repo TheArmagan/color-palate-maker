@@ -7,7 +7,15 @@ const app = new Vue({
     currentColors: null,
     selectedColor: null,
     pr: new PalateRenderer(),
-    suggestedColors: []
+    suggestedColors: [],
+    dialogs: {
+      export: {
+        active: false
+      },
+      import: {
+        active: false
+      }
+    }
   },
   mounted() {
     this.$watch(function () {

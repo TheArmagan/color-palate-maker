@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="app">
+    <div
+      id="app"
+      :class="{'no-overflow': dialogs.export.active || dialogs.import.active}"
+    >
       <div class="container">
         <div class="main-controls">
           <div class="color-picker" tooltip="Change color">
@@ -46,7 +49,10 @@
             </svg>
           </button>
           <div class="import-and-export">
-            <button class="btn export-button">
+            <button
+              class="btn export-button"
+              @click="dialogs.export.active = true"
+            >
               <div class="button-container">
                 <svg viewBox="0 0 24 24">
                   <path
@@ -57,7 +63,10 @@
                 <p>Export</p>
               </div>
             </button>
-            <button class="btn import-button">
+            <button
+              class="btn import-button"
+              @click="dialogs.import.active = true"
+            >
               <div class="button-container">
                 <svg viewBox="0 0 24 24">
                   <path
@@ -132,6 +141,33 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        class="dialogs"
+        :class="{'active': dialogs.export.active || dialogs.import.active}"
+      >
+        <div class="dialog" :class="{'active': dialogs.export.active}">
+          <div class="close" @click="dialogs.export.active = false">
+            <svg viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+              />
+            </svg>
+          </div>
+          <h1>Export Menu</h1>
+        </div>
+        <div class="dialog" :class="{'active': dialogs.import.active}">
+          <div class="close" @click="dialogs.import.active = false">
+            <svg viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+              />
+            </svg>
+          </div>
+          <h1>Import Menu</h1>
         </div>
       </div>
     </div>
