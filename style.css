@@ -17,7 +17,7 @@ body,
   background-attachment: fixed;
   background-image: linear-gradient(109.6deg, #dfeaf7 11.2%, #f4f8fc 91.1%);
   contain: content;
-  overflow-y: auto;
+  overflow-y: overlay;
   overflow-x: hidden;
 }
 

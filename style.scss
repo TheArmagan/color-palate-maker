@@ -20,7 +20,7 @@ body,
     rgba(244, 248, 252, 1) 91.1%
   );
   contain: content;
-  overflow-y: auto;
+  overflow-y: overlay;
   overflow-x: hidden;
 
   &.no-overflow {
